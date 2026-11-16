@@ -14,11 +14,37 @@ Continue developing this project in the [Lovable editor](https://lovable.dev/pro
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+git clone https://github.com/Akash4075/inventron-hackathon.git
+cd inventron-hackathon
+npm install
 npm run dev
 ```
+
+## Cloudflare Deployment
+
+This project uses **TanStack Start** with **Nitro** configured with the Cloudflare module preset (`nitro (build-only using cloudflare as a default target)`).
+
+### Option 1: Automatic Deploy via Cloudflare Dashboard (Recommended)
+
+1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com/).
+2. Navigate to **Compute (Workers & Pages)** > **Create application** > **Pages** (or **Workers** with Git).
+3. Connect your GitHub account and select the repository: `Akash4075/inventron-hackathon`.
+4. Configure Build Settings:
+   - **Framework preset:** `None` / `Vite`
+   - **Build command:** `npm run build`
+   - **Build output directory:** `.output/public`
+   - **Node.js Compatibility Flag:** In project settings, add the environment variable `NODE_VERSION=20` (or set compatibility flag `nodejs_compat`).
+5. Click **Save and Deploy**. Every subsequent push to `main` will automatically build and deploy.
+
+### Option 2: Deploy using Wrangler CLI
+
+1. Authenticate with Cloudflare:
+   ```sh
+   npx wrangler login
+   ```
+2. Build and deploy:
+   ```sh
+   npm run deploy
+   ```
+   This automatically runs `npm run build` followed by `wrangler deploy` using the included [`wrangler.json`](./wrangler.json).
